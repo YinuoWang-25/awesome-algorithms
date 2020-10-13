@@ -145,6 +145,7 @@ Root of i is id[id[id[...id[i]...]]]
 ## Find
 
 Check if p and q have the same root
+
 ![quick union find](assets/quick_union_find.png)
 
 ## Union
