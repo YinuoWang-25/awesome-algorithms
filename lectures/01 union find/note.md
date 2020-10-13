@@ -291,3 +291,11 @@ Starting from an empty data structure, any sequence of M union-find ops on N obj
 #### Amazing fact
 
 No linear-time algorithm exists
+
+# Summary
+
+## Bottom line
+
+Weighted quick union (with path compression) makes it possible to solve problems that could not otherwise be addressed
+
+![summary](assets/summary.png)
