@@ -341,6 +341,7 @@ When N is large, theory guarantees a sharp threshold p\*
 - p < p\*: almost certainly does not percolate.
 
 What is the value of p\* ?
+
 ![percolation p start](assets/percolation_p_star.png)
 
 ### Monte Carlo simulation
