@@ -299,3 +299,87 @@ No linear-time algorithm exists
 Weighted quick union (with path compression) makes it possible to solve problems that could not otherwise be addressed
 
 ![summary](assets/summary.png)
+
+# Applications
+
+- Percolation
+- Games (Go, Hex)
+- Dynamic connectivity
+- Least common ancestor
+- Equivalence of finite state automata
+- Hoshen-Kopelman algorithm in physics
+- Hinley-Milner polymorphic type inference
+- Kruskal's minimum spanning tree algorithm
+- Compiling equivalence statements in Fortran
+- Morphological attribute openings and closings
+- Matlab's bwlabel() function in image processing
+
+## Percolation
+
+A model for many physical systems
+
+- N-by-N grid of sites
+- Each site is open with probability p (or blocked with probability 1 – p).
+- System **percolates** iff top and bottom are connected by open sites
+
+![percolation](assets/percolation.png)
+
+### Modeling
+
+![percolation model](assets/percolation_model.png)
+
+<br>
+
+Depends on site vacancy probability p
+
+### Percolation phase transition
+
+When N is large, theory guarantees a sharp threshold p\*
+
+- p > p\*: almost certainly percolates.
+
+- p < p\*: almost certainly does not percolate.
+
+What is the value of p\* ?
+![percolation p start](assets/percolation_p_star.png)
+
+### Monte Carlo simulation
+
+- Initialize N-by-N whole grid to be blocked
+
+- Declare random sites open until top connected to bottom
+
+- Vacancy percentage estimates p\*.
+
+### Dynamic connectivity solution to estimate percolation threshold
+
+#### How to check whether an N-by-N system percolates?
+
+1. Create an object for each site and name them 0 to N^2 – 1
+
+2. Sites are in same component if connected by open sites
+
+3. Percolates iff any site on bottom row is connected to site on top row
+
+- brute-force algorithm: N^2 calls to connected()
+
+- Introduce 2 virtual sites (and connections to top and bottom)
+
+  - Percolates iff virtual top site is connected to virtual bottom site
+  - efficient algorithm: only 1 call to connected()
+
+  ![virtual top and bottom](assets/virtual_top_and_bottom.png)
+
+#### How to model opening a new site?
+
+Mark new site as open; connect it to all of its adjacent open sites.
+
+- up to 4 calls to union()
+
+#### What is percolation threshold p\* ?
+
+About 0.592746 for large square lattices.
+
+- constant known only via simulation
+
+![percolation threshold](assets/percolation_threshold.png)
