@@ -81,4 +81,25 @@ Repeat
 
 <br>
 
-# Quick Find
+# Quick Find [eager approach]
+
+## Data structure
+
+- Integer array id[] of length N
+
+- Interpretation: p and q are connected iff (if and only if) they have the same id
+
+![quick find](assets/L1/quick_find.png)
+
+## Find
+
+Check if p and q have the same id.
+
+id[6] = 0; id[1] = 1
+6 and 1 are not connected
+
+## Union
+
+To merge components containing p and q, change all entries whose id equals id[p] to id[q]
+
+![quick find union](assets/L1/quick_find_union.png)
