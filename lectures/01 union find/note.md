@@ -2,7 +2,7 @@
 
 ## Description
 
-![dynamic connectivity](assets/L1/dynamic_connectivity.png)
+![dynamic connectivity](assets/dynamic_connectivity.png)
 
 <br>
 
@@ -35,13 +35,13 @@ We assume **is connected to** is an equivalence relation:
 **Connected components** - Maximal **set** of objects that are mutually
 connected.
 
-![connected component](assets/L1/connected_component.png)
+![connected component](assets/connected_component.png)
 
 <br>
 
 ## Implementing the operations
 
-### Find query.
+### Find query
 
 Check if two objects are in the same component
 
@@ -49,7 +49,7 @@ Check if two objects are in the same component
 
 Replace components containing two objects with their union
 
-![union command](assets/L1/union_command.png)
+![union command](assets/union_command.png)
 
 <br>
 
@@ -63,7 +63,7 @@ Design efficient data structure for union-find
 
 - Find queries and union commands may be intermixed.
 
-![class UF](assets/L1/class_uf.png)
+![class UF](assets/class_uf.png)
 
 <br>
 
@@ -77,7 +77,7 @@ Repeat
 
 - if they are not yet connected, connect them and print out pair
 
-![UF client](assets/L1/uf_client.png)
+![UF client](assets/uf_client.png)
 
 <br>
 
@@ -89,7 +89,7 @@ Repeat
 
 - Interpretation: p and q are connected iff (if and only if) they have the same id
 
-![quick find](assets/L1/quick_find.png)
+![quick find](assets/quick_find.png)
 
 ## Find
 
@@ -102,4 +102,19 @@ id[6] = 0; id[1] = 1
 
 To merge components containing p and q, change all entries whose id equals id[p] to id[q]
 
-![quick find union](assets/L1/quick_find_union.png)
+![quick find union](assets/quick_find_union.png)
+
+## Java implementation
+
+![quick find java](assets/quick_find_java.png)
+
+## Too Slow
+
+### Cost model
+
+![quick find cost](assets/quick_find_cost.png)
+
+### Union is too expensive
+
+It takes N^2 (quadratic) array accesses to process a sequence of
+N union commands on N objects.
