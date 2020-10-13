@@ -112,6 +112,8 @@ To merge components containing p and q, change all entries whose id equals id[p]
 
 ### Cost model
 
+Number of array accesses (for read or write)
+
 ![quick find cost](assets/quick_find_cost.png)
 
 ### Union is too expensive
@@ -122,3 +124,56 @@ N union commands on N objects.
 ### Quadratic algorithms do not scale
 
 ![Quadratic](assets/quadratic.png)
+
+# Quick Union [lazy approach]
+
+## Data structure
+
+Integer array id[] of length N
+
+Interpretation: id[i] is parent of i
+
+Root of i is id[id[id[...id[i]...]]]
+
+- keep going until it doesn’t change
+  (algorithm ensures no cycles)
+
+![quick union](assets/quick_union.png)
+
+![quick union root](assets/quick_union_root.png)
+
+## Find
+
+Check if p and q have the same root
+![quick union find](assets/quick_union_find.png)
+
+## Union
+
+To merge components containing p and q, set the id of p's root to the id of q's root
+
+![quick union merge tree](assets/quick_union_merge_tree.png)
+
+![quick union merge array](assets/quick_union_merge_array.png)
+
+## Java Implementation
+
+![quick union java](assets/quick_union_java.png)
+
+## Too slow
+
+### Cost Model
+
+Number of array accesses (for read or write).
+
+![quick union cost](assets/quick_union_cost.png)
+
+### Quick-find defect
+
+- Union too expensive (N array accesses)
+
+- Trees are flat, but too expensive to keep them flat
+
+## Quick-union defect
+
+- Trees can get tall
+- Find too expensive (could be N array accesses)
