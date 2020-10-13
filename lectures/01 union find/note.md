@@ -145,6 +145,7 @@ Root of i is id[id[id[...id[i]...]]]
 ## Find
 
 Check if p and q have the same root
+
 ![quick union find](assets/quick_union_find.png)
 
 ## Union
@@ -173,7 +174,7 @@ Number of array accesses (for read or write).
 
 - Trees are flat, but too expensive to keep them flat
 
-## Quick-union defect
+### Quick-union defect
 
 - Trees can get tall
 - Find too expensive (could be N array accesses)
