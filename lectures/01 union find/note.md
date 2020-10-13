@@ -248,3 +248,46 @@ Increases by 1 when tree T1 containing x is merged into another tree T2
 - Size of tree containing x can double at most lg N times. Why?
 
 ![weighted_quick_union_analysis](assets/weighted_quick_union_analysis.png)
+
+# Improvement 2: Path Compression
+
+## Quick union with path compression
+
+Just after computing the root of p, set the id of each examined node to point to that root
+![path_compression_1](assets/path_compression_1.png)
+![path_compression_2](assets/path_compression_2.png)
+![path_compression_3](assets/path_compression_3.png)
+![path_compression_4](assets/path_compression_4.png)
+![path_compression_5](assets/path_compression_5.png)
+
+### Java implementation
+
+#### Two-pass implementation
+
+add second loop to root() to set the id[] of each examined node to the root
+
+#### Simpler one-pass variant
+
+Make every other node in path point to its grandparent (thereby halving path length)
+
+![path_compression_java](assets/path_compression_java.png)
+
+### Amortized Analysis
+
+#### Proposition
+
+Starting from an empty data structure, any sequence of M union-find ops on N objects makes ≤ c ( N + M lg \* N ) array accesses.
+
+- Analysis can be improved to N + M α(M, N).
+
+- Simple algorithm with fascinating mathematics.
+
+#### Linear-time algorithm for M union-find ops on N objects?
+
+- Cost within constant factor of reading in the data
+- In theory, WQUPC is not quite linear
+- In practice, WQUPC is linear
+
+#### Amazing fact
+
+No linear-time algorithm exists
