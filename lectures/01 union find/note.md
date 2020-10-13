@@ -178,3 +178,73 @@ Number of array accesses (for read or write).
 
 - Trees can get tall
 - Find too expensive (could be N array accesses)
+
+# Improvement 1: weighting
+
+## Weighted quick-union
+
+- Modify quick-union to avoid tall trees.
+- Keep track of size of each tree (number of objects).
+- Balance by linking root of smaller tree to root of larger tree.
+  - reasonable alternatives:
+    union by height or "rank"
+
+![weighted quick union](assets/weighted_quick_union.png)
+
+### Quick-union and weighted quick-union example
+
+![weighted quick union example](assets/weighted_quick_union_example.png)
+
+### Java implementation
+
+#### Data structure
+
+Same as quick-union, but maintain extra array sz[i]
+to count number of objects in the tree rooted at i.
+
+#### Find
+
+Identical to quick-union
+
+```java
+return root(p) == root(q);
+```
+
+#### Union
+
+Modify quick-union to:
+
+- Link root of smaller tree to root of larger tree.
+- Update the sz[] array.
+
+```java
+int i = root(p);
+int j = root(q);
+if (i == j) return;
+if (sz[i] < sz[j]) { id[i] = j; sz[j] += sz[i]; }
+else { id[j] = i; sz[i] += sz[j]; }
+```
+
+### Analysis
+
+#### Running time
+
+- Find: takes time proportional to depth of p and q
+
+- Union: takes constant time, given roots.
+
+#### Proposition
+
+Depth of any node x is at most lg _N_
+
+![weighted_quick_union_analysis_table](assets/weighted_quick_union_analysis_table.png)
+
+#### When does depth of x increase?
+
+Increases by 1 when tree T1 containing x is merged into another tree T2
+
+- The size of the tree containing x at least doubles since |T 2| ≥ |T 1|
+
+- Size of tree containing x can double at most lg N times. Why?
+
+![weighted_quick_union_analysis](assets/weighted_quick_union_analysis.png)
