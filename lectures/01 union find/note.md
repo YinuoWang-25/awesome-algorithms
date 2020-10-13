@@ -118,3 +118,7 @@ To merge components containing p and q, change all entries whose id equals id[p]
 
 It takes N^2 (quadratic) array accesses to process a sequence of
 N union commands on N objects.
+
+### Quadratic algorithms do not scale
+
+![Quadratic](assets/quadratic.png)
