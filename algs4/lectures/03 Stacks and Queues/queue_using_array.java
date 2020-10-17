@@ -19,9 +19,9 @@ public class queue_using_array {
         }
     }
 
-    private void resize(int capacity) {
+    // private void resize(int capacity) {
 
-    }
+    // }
 
     public String dequeue() {
         return "";
