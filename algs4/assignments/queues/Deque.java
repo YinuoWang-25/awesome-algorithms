@@ -27,11 +27,12 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
     
+    // inner class as Node
     private class Node {
     
-        Item item;
-        Node next;
-        Node prev;
+        private Item item;
+        private Node next;
+        private Node prev;
     
         public Node(Item item) {
             this.item = item;
@@ -40,8 +41,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    private Node first;
-    private Node last;
+    private Node first, last;
     private int size;
 
     public Deque() {
@@ -81,30 +81,28 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Item removeFirst() {
-        if (isEmpty()) throw new NoSuchElementException("Deque underflow");
+        if (isEmpty()) throw new NoSuchElementException("remove first underflow");
         Item item = first.item;
-        size--;
-        if (isEmpty()) {
+        first = first.next;
+        if (first == null) {
             last = null;
-            first = null;
         } else {
-            first = first.next;
             first.prev = null;
         }
+        size--;
         return item;
     }
 
     public Item removeLast() {
-        if (isEmpty()) throw new NoSuchElementException("Deque underflow");
+        if (isEmpty()) throw new NoSuchElementException("remove last underflow");
         Item item = last.item;
-        size--;
-        if (isEmpty()) {
+        last = last.prev;
+        if (last == null) {
             first = null;
-            last = null;
         } else {
-            last = last.prev;
             last.next = null;
         }
+        size--;
         return item;
     }
 
