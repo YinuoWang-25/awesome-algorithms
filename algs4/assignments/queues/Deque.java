@@ -42,44 +42,48 @@ public class Deque<Item> implements Iterable<Item> {
 
     private Node first;
     private Node last;
-    private int n;
+    private int size;
 
     public Deque() {
-        n = 0;
+        size = 0;
     }
 
     public boolean isEmpty() {
-        return n == 0;
+        return size == 0;
     }
 
     public int size() {
-        return n;
+        return size;
     }
 
     public void addFirst(Item item) {
-        if (item == null) throw new IllegalArgumentException("input must be not null");
+        if (item == null) throw new IllegalArgumentException("can not add null to first");
         Node oldFirst = first;
         first = new Node(item);
-        first.next = oldFirst;
-        if (last == null) last = first;
-        else first.next.prev = first;
-        n++;
+        if (oldFirst == null) last = first;
+        else  {
+            first.next = oldFirst;
+            oldFirst.prev = first;
+        }
+        size++;
     }
 
     public void addLast(Item item) {
-        if (item == null) throw new IllegalArgumentException("input must be not null");
+        if (item == null) throw new IllegalArgumentException("can not add null to last");
         Node oldLast = last;
         last = new Node(item);
-        last.prev = oldLast;
-        if (first == null) first = last;
-        else last.prev.next = last;
-        n++;
+        if (oldLast == null) first = last;
+        else {
+            last.prev = oldLast;
+            oldLast.next = last;
+        }
+        size++;
     }
 
     public Item removeFirst() {
         if (isEmpty()) throw new NoSuchElementException("Deque underflow");
         Item item = first.item;
-        n--;
+        size--;
         if (isEmpty()) {
             last = null;
             first = null;
@@ -93,7 +97,7 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeLast() {
         if (isEmpty()) throw new NoSuchElementException("Deque underflow");
         Item item = last.item;
-        n--;
+        size--;
         if (isEmpty()) {
             first = null;
             last = null;
