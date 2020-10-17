@@ -4,15 +4,97 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
-    private Item[] a;
-    private int n;
+    private Item[] items;
+    private int size;
 
     public RandomizedQueue() {
-        a = (Item[]) new Object[2];
-        n = 0;
+        // cannot create object array
+        items = (Item[]) new Object[2];
+        size = 0;
     }
 
-    // Unit testing
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void enqueue(Item item) {
+        if (item == null) throw new IllegalArgumentException("can not enqueue null");
+        if (size == items.length) resize(2 * items.length);
+        items[size++] = item;
+        if (size > 1) shuffle();
+    }
+
+    public Item dequeue() {
+        if (isEmpty()) throw new NoSuchElementException("can not dequeue on empty queue");
+        if (size == items.length / 4) resize(items.length / 2);
+        shuffle();
+        Item item = items[size-1];
+        items[size-1] = null;
+        size--;
+        return item;
+    }
+
+    public Item sample() {
+        if (isEmpty()) throw new NoSuchElementException("can not sample on empty queue");
+        return items[StdRandom.uniform(size)];
+    }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return new ArrayIterator();
+    }
+
+    // helper function to resize the array to size of capacity
+    private void resize(int capacity) {
+        Item[] copy = (Item[]) new Object[capacity];
+        for (int i = 0; i < size; i++) {
+            copy[i] = items[i];
+        }
+        items = copy;
+    }
+
+    private void shuffle() {
+        int randomIndex = StdRandom.uniform(size);
+        Item temp = items[randomIndex];
+        items[randomIndex] = items[size-1];
+        items[size-1] = temp;
+    }
+
+    private class ArrayIterator implements Iterator<Item> {
+
+        private int i;
+        private int[] randomIndices;
+        public ArrayIterator() {
+            i = 0;
+            randomIndices = new int[size];
+            for (int j = 0; j < size; j++) {
+                randomIndices[j] = j;
+            }
+            StdRandom.shuffle(randomIndices);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return i < size;
+        }
+
+        @Override
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            return items[randomIndices[i++]];
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    // Unit testing (required)
     public static void main(String[] args) {
         RandomizedQueue<Integer> queue = new RandomizedQueue<>();
         for (int i = 0; i < 10; i++) {
@@ -26,85 +108,5 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         System.out.println("dequeue");
         while (!queue.isEmpty()) System.out.println(queue.dequeue());
         System.out.println(queue.size());
-    }
-
-    public boolean isEmpty() {
-        return n == 0;
-    }
-
-    public int size() {
-        return n;
-    }
-
-    public void enqueue(Item item) {
-        if (item == null) throw new IllegalArgumentException();
-        if (n == a.length) resize(2 * a.length);
-        if (n == 0) {
-            a[n++] = item;
-            return;
-        }
-        int randomIndex = StdRandom.uniform(n);
-        Item temp = a[randomIndex];
-        a[randomIndex] = item;
-        a[n++] = temp;
-    }
-
-    private void resize(int capacity) {
-        Item[] temp = (Item[]) new Object[capacity];
-        for (int i = 0; i < n; i++) {
-            temp[i] = a[i];
-        }
-        a = temp;
-    }
-
-    public Item dequeue() {
-        if (isEmpty()) throw new NoSuchElementException();
-        if (n == a.length / 4) resize(a.length / 2);
-        int randomIndex = StdRandom.uniform(n);
-        Item item = a[randomIndex];
-        a[randomIndex] = a[--n];
-        a[n] = null; // to prevent loitering
-        return item;
-    }
-
-    public Item sample() {
-        if (isEmpty()) throw new NoSuchElementException();
-        return a[StdRandom.uniform(n)];
-    }
-
-    @Override
-    public Iterator<Item> iterator() {
-        return new ArrayIterator();
-    }
-
-    private class ArrayIterator implements Iterator<Item> {
-
-        private int i;
-        private int[] randomIndices;
-        public ArrayIterator() {
-            i = 0;
-            randomIndices = new int[n];
-            for (int j = 0; j < n; j++) {
-                randomIndices[j] = j;
-            }
-            StdRandom.shuffle(randomIndices);
-        }
-
-        @Override
-        public boolean hasNext() {
-            return i < n;
-        }
-
-        @Override
-        public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return a[randomIndices[i++]];
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-
     }
 }
